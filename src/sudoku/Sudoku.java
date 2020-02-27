@@ -78,7 +78,14 @@ public class Sudoku {
 
     private boolean hasGameBeenSolved() {
         //Description: Returns true if the game has been completely solved; false otherwise.Hint, loop over all the cells and if you find one cell that has 0 returns false immediately. If after looping over all the cells you could not find any cell with 0, then returns true (game has been solved since there is no empty cells left).
-        
+        for (int row = 0; row < gameBoard.length; row++) {
+            for (int col = 0; col < gameBoard.length; col++) {
+                if(gameBoard[row][col] == 0){
+                    System.out.println("game is NOT solved");
+                    return false;
+                }
+            }
+        }System.out.println("game is solved");
         return true; 
     }
 
@@ -105,30 +112,45 @@ public class Sudoku {
     private Set<Integer> getFirstRuleElimination(int row) {
         //Description: Loops over all the columns of the given row (method input) and adds all the numbers found in these cells into a Set object. Returns this set object.
         Set<Integer> set = new HashSet();
+        for (int col = 0; col < gameBoard.length; col++) {
+            set.add(gameBoard[row][col]);
+        }
         return set;
     }
 
-    private Set<Integer> getSecondRuleElimination(int row) {
+    private Set<Integer> getSecondRuleElimination(int col) {
         //Loops over all the rows of the given column (method input) and adds all the numbers found in these cells into a Set object. Returns this set object.
         Set<Integer> set = new HashSet();
+        for (int row = 0; row < gameBoard.length; row++) {
+            set.add(gameBoard[row][col]);
+        }
         return set;
     }
 
-    private Set<Integer> getThirdRuleElimination(int row, int column) {
+    private Set<Integer> getThirdRuleElimination(int row, int col) {
         //Each cell defined by a (row, column) belongs to a group (A, B, C, … as shown in the second figure of this assignment). This method shall initially call two methods (see description about the methods below): one returning an array with min and max rows and the other with min and max columns for the current group that this cell defined by a rowcol belongs to. And then, loop over the 9 cells defined in this group (2 Nested FOR loops) and collect all the numbers found in the gameboard into a Set object and return that object.
+        getRowRangeForGroup(row);
+        getColRangeForGroup(col);
         Set<Integer> set = new HashSet();
+        for (row = 0; row < gameBoard.length; row++) {
+            set.add(gameBoard[row][col]);
+        }
         return set;
     }
 
     private int[] getRowRangeForGroup(int row) {
         //Based on the given row, it defines the minimum and maximum row for that group. Example for row = 1 then min and max row for this group is 0 and 2 respectively, while for row = 4 then min and max rows are 3 and 5. This method returns an integer array with those two numbers.
         int[] rowRange = new int[2];
+        rowRange[0] = row - 1;
+        rowRange[1] = row + 1;
         return rowRange;
     }
 
-    private int[] getColRangeForGroup(int row) {
+    private int[] getColRangeForGroup(int col) {
 
         int[] colRange = new int[2];
+        colRange[0] = col - 1;
+        colRange[1] = col + 1;
         return colRange;
     }
 
