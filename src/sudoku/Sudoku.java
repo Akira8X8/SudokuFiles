@@ -138,9 +138,9 @@ public class Sudoku {
         int[] rowRange = getRowRangeForGroup(row); //[0, 2]
         int[] colRange = getColRangeForGroup(col); //[1, 3]
         Set<Integer> set = new HashSet();
-        for (int xValue = rowRange[0]; xValue < rowRange[1]; xValue++) {
+        for (int xValue = rowRange[0]; xValue <= rowRange[1]; xValue++) {
             /* For given value, check if it's contained in row */
-            for (int yValue = colRange[0]; yValue < colRange[1]; yValue++) {
+            for (int yValue = colRange[0]; yValue <= colRange[1]; yValue++) {
                 if (gameBoard[xValue][yValue] != 0) {
                     set.add(gameBoard[xValue][yValue]);
                 }
@@ -152,12 +152,12 @@ public class Sudoku {
     private int[] getRowRangeForGroup(int row) {
 //Based on the given row, it defines the minimum and maximum row for that group. Example for row = 1 then min and max row for this group is 0 and 2 respectively, while for row = 4 then min and max rows are 3 and 5. This method returns an integer array with those two numbers.
         int[] rowRange = new int[2];
-        if (row == 0) {
+        if (row == 0 || row == 3 | row == 6) {
             rowRange[0] = row;
             rowRange[1] = row + 2;
-//        } else if (row == 8) {
-//            rowRange[0] = row - 2;
-//            rowRange[1] = row;
+        } else if (row == 2 || row == 5 || row == 8) {
+            rowRange[0] = row - 2;
+            rowRange[1] = row;
         } else {
             rowRange[0] = row - 1;
             rowRange[1] = row + 1;
@@ -168,12 +168,12 @@ public class Sudoku {
     private int[] getColRangeForGroup(int col) {
 
         int[] colRange = new int[2];
-        if (col == 0) {
+        if (col == 0 || col == 3 | col == 6) {
             colRange[0] = col;
             colRange[1] = col + 2;
-//        } else if (col == 8) {
-//            colRange[0] = col - 2;
-//            colRange[1] = col;
+        } else if (col == 2 || col == 5 || col == 8) {
+            colRange[0] = col - 2;
+            colRange[1] = col;
         } else {
             colRange[0] = col - 1;
             colRange[1] = col + 1;
